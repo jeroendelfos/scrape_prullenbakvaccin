@@ -1,3 +1,4 @@
+import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
@@ -40,6 +41,6 @@ if __name__ == "__main__":
 
     # Global vars
     url = "https://prullenbakvaccin.nl"
-    postal_code = None
+    postal_code = sys.argv[1]
 
     scrape_url(url, postal_code)

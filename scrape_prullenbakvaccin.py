@@ -41,6 +41,10 @@ if __name__ == "__main__":
 
     # Global vars
     url = "https://prullenbakvaccin.nl"
-    postal_code = sys.argv[1]
+    try: 
+        postal_code = sys.argv[1]
+    except IndexError:
+        print("""ERROR: Enter postal code after python/batch run command like "1234AX".""")
+        sys.exit(1)
 
     scrape_url(url, postal_code)

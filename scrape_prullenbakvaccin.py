@@ -13,7 +13,7 @@ def scrape_url(url, postal_code):
     driver.delete_all_cookies()
     with driver:
         driver.get(url)
-    time.sleep(5)
+    time.sleep(10)
 
     # Go to nearest locations
     pc = driver.find_element_by_xpath("/html/body/main/div[2]/div[1]/form/input[2]")
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # Settings for browsing and notifications
 	
     options = uc.ChromeOptions()
-    # options.add_argument("--start-maximized")
+    options.add_argument("--start-maximized")
     # options.add_argument("--disable-extensions")
     # options.add_argument("--disable-plugins-discovery")
     # options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36")

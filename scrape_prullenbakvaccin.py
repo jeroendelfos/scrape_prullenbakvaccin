@@ -54,27 +54,25 @@ def scrape_url(url, postal_code):
 
     # Scrape for 24 hours, abort with CTRL-C
     for i in range(1440):
+        if i != 0:
+            # Wait for next refresh
+            time.sleep(50)
+
         # Get information from page
-        locs = driver.find_elements_by_class_name("card-body")
-        n = 0
-        for loc in locs:
-            n += 1
-            print("\rChecking location [{}/{}]".format(n, len(locs)), end="")
-            if "Heeft geen vaccins" not in loc.text:
-                print("ER IS EEN VACCIN BESCHIKBAAR: \n{}".format(loc.text))
-                toaster.show_toast("PrullenbakVaccin", 
-                                    "Er is een vaccin beschikbaar!")
-                winsound.Beep(1500, 5000)
+        loc = driver.find_element_by_class_name("card-body")
+        if "Heeft geen vaccins" not in loc.text:
+            print("\nER IS EEN VACCIN BESCHIKBAAR: \n{}".format(loc.text))
+            toaster.show_toast("PrullenbakVaccin", 
+                                "Er is een vaccin beschikbaar!")
+            winsound.Beep(1500, 5000)
 
         # Get timestamp of refresh
         timestamp_string = driver.find_element_by_xpath("//*[@id=\"locations\"]/p")
         pattern = "\d\d:\d\d:\d\d"
         timestamp = re.findall(pattern, timestamp_string.text)[0]
-        print("\tLast refresh at ", timestamp, "\tabort with CTRL-C", end="")
+        print("\rNo vaccines available. Last refresh at ", timestamp, "\t[abort with CTRL-C]", end="\r")
+        #print("\r")
 
-        # Wait for next refresh
-        time.sleep(60)
-        continue
 
 
 if __name__ == "__main__":
